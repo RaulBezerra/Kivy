@@ -52,6 +52,9 @@ class Tela3(Screen): #TELA DOS DETALHES
 class Arquivos(Screen): #TELA DE SELECIONAR ARQUIVOS
 	pass
 
+class Inspecao(Screen): #TELA DE SELECIONAR ARQUIVOS
+	pass
+
 
 def eh_img(nome):
     resposta = False
@@ -79,12 +82,15 @@ class MainApp(MDApp):
 
     # Adiciona o marcador com base nos critérios
     def adicionar_marcador(self, x, y, cor):
+        # self.arquivo_inspecao = ''
+        # self.carrega_tela_inspecao()
         self.root.children[0].ids.tela2.add_widget(MDIconButton(  # CONFERIR SE CHILDREN[0] FUNCIONA SEMPRE
             icon='map-marker',
             pos_hint={"center_x": x, "center_y": y},
             theme_text_color='Custom',
             text_color=cor,
-            on_press=lambda x: self.print_ok()
+            on_press=lambda x: self.aciona_marcador(),
+            on_release= lambda x: self.aceita_marcador()
             )
         )
 
@@ -118,6 +124,16 @@ class MainApp(MDApp):
         Builder.load_file('Rascunho_telas/tela2.kv')
         self.sm.add_widget(Tela2(name="tela2"))
 
+    def carrega_tela_arquivos(self):
+        self.arquivo_base = ""
+        Builder.load_file('Rascunho_telas/arquivos.kv')
+        self.sm.add_widget(Arquivos(name="arquivos"))
+
+
+    def carrega_tela_inspecao(self):
+        Builder.load_file('Rascunho_telas/inspecao.kv')
+        self.sm.add_widget(Inspecao(name="inspecao"))
+        self.sm.current = "inspecao"
 
     def emite_alerta(self):
         self.alerta_img = MDDialog(
@@ -131,11 +147,20 @@ class MainApp(MDApp):
         )
         self.alerta_img.open()
 
-    def exibir_previa(self, filename):
+    def previa_arquivo_base(self, filename):
 
         try:
             self.root.children[0].ids.imagem_exibida.source = filename[0]
             self.arquivo_base = filename[0]
+
+        except:
+            pass
+
+    def previa_inspecao(self, filename):
+
+        try:
+            self.root.children[0].ids.imagem_exibida.source = filename[0]
+            self.inspecao = filename[0]
 
         except:
             pass
@@ -153,19 +178,23 @@ class MainApp(MDApp):
     def print_ok(self):
         print('ok')
 
-    def print_ok2(self):
-        print('ok2')
+    def aciona_marcador(self):
+        self.rejeita_marcador()
 
-    def selecionar_arquivo(self):
+
+    def selecionar_arquivo_base(self):
         # self.arquivo_base = easygui.fileopenbox()
         # return self.arquivo_base
-        self.arquivo_base = ""
+        self.carrega_tela_arquivos()
+        self.sm.current = 'arquivos'
+
+    def selecionar_arquivo(self):
+        arquivo = ''
         Builder.load_file('Rascunho_telas/arquivos.kv')
         self.sm.add_widget(Arquivos(name="arquivos"))
         self.sm.current = 'arquivos'
 
     def ir_tela2(self):
-
         if not eh_img(self.arquivo_base):
             if self.arquivo_base == '':
                 pass
@@ -181,6 +210,9 @@ class MainApp(MDApp):
 
             Window.bind(on_mouse_up = self.marcar)
 
+    def voltar_tela2(self):
+        self.sm.current = "tela2"
+        self.aceita = True
 
 MainApp().run()
 

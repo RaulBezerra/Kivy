@@ -1,0 +1,33 @@
+#<ImageButton@ButtonBehavior+Image>:
+#    on_press: self.parent.callback()
+# this class is created on the fly, named ImageButton and subclasses ButtonBehavior and Image
+# It's basically an Image that can act like a Button.
+
+#<Game>
+#   ImageButton:
+#     id: "11"
+#     center_x: root.width / 2 - root.height * 1/5 * 1.5
+#     center_y: root.height * 1/5
+#     size: root.height / 6, root.height / 6
+#     source: root.images[0]
+
+<Tela2>: #TELA DA PLANTA
+
+    FloatLayout:
+
+        id: tela2
+
+        Image:
+            source: app.arquivo_base
+            size_hint: 1,.8 #Ocupa td em X e .8 em Y
+            pos_hint: {"center_x": 0.5, "top": 1}
+
+#        MDIconButton:
+#            icon: 'map-marker'
+#            pos_hint: {"center_x": 0.4, "center_y": 0.6}
+#            md_bg_color: 0,0,0,0
+#            theme_text_color: 'Custom'
+#            text_color: (0,100/255.0,0,1)
+#            on_press: app.aciona_marcador()
+#            on_release: app.aceita_marcador()
+

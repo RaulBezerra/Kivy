@@ -1,0 +1,26 @@
+<Arquivos>
+	id: my_widget
+	FloatLayout:
+
+		size: root.width, root.height
+
+		Image:
+			id: imagem_exibida
+			source: ""
+			size_hint: (.4, .4)
+			pos_hint: {"center_x":.5, "top":1}
+
+
+		FileChooserIconView:
+			id: filechooser
+			path: 'C:/Users/Raul/Desktop/OneDrive/APP/Kivy/Imagens'
+			on_selection: app.previa_arquivo_base(filechooser.selection)
+			size_hint: (1, 0.4)
+			pos_hint: {"center_x":0.5, "top":0.6}
+
+		MDRaisedButton:
+			text: "Selecionar Arquivo"
+			font_size: 20
+	        size_hint: (0.3, 0.1)
+			pos_hint: {"x":.7, "bottom":1}
+			on_release: app.ir_tela2()
